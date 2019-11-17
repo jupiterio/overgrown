@@ -30,10 +30,13 @@ function voxworld:add(id, options)
     vox.y = options.y or 0
     vox.z = options.z or 0
 
-    self._items[id] = vox
-    table.insert(self._zordered, vox)
+    if options.hide and (not options.hide.min or not options.hide.max) then error("min and max properties are required in options.hide") end
+    vox.hide = options.hide
 
     vox:origin(0.5, 0.5)
+
+    self._items[id] = vox
+    table.insert(self._zordered, vox)
 
     self:zorder()
     return vox
@@ -76,7 +79,16 @@ end
 
 function voxworld:draw()
     for _,vox in ipairs(self._zordered) do
-        vox:draw(self:transformPoint(vox.x, vox.y, vox.z))
+        local draw = true
+        if vox.hide then
+            local rot = (self.rot*180/math.pi) % 360 -- we want degrees, and we want them between 0 and 360 (exclusive)
+            if vox.hide.min > vox.hide.max then
+                draw = not (rot > vox.hide.min or rot < vox.hide.max)
+            else
+                draw = not (rot > vox.hide.min and rot < vox.hide.max)
+            end
+        end
+        if draw then vox:draw(self:transformPoint(vox.x, vox.y, vox.z)) end
     end
 end
 
