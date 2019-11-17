@@ -48,7 +48,7 @@ end
 
 function voxworld:draw()
     for k,v in pairs(self._items) do
-        v:draw(voxworld.transformPoint(v.x, v.y, v.z))
+        v:draw(self:transformPoint(v.x, v.y, v.z))
     end
 end
 
