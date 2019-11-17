@@ -29,25 +29,26 @@ function voxel.new(filename)
         r=0,
         sx=1,
         sy=1,
-        ox=1,
-        oy=1
+        orx=1,
+        ory=1
     }
 
     return setmetatable(vox, {__index=voxel})
 end
 
-function voxel:transform(r, sx, sy, ox, oy)
+function voxel:transform(r, sx, sy, orx, ory)
     self._transform.r = r or self._transform.r
     self._transform.sx = sx or self._transform.sx
-    self._transform.sy = sy or self._transform.sx -- not a mistake
-    self._transform.ox = ox or self._transform.ox
-    self._transform.oy = oy or self._transform.oy
+    self._transform.sy = sy or self._transform.sy
+    self._transform.orx = orx or self._transform.orx
+    self._transform.ory = ory or self._transform.ory
 
     self.batch:clear()
 
+    local orx, ory = self._transform.orx, self._transform.ory
     for i=1,#self.quads*4 do
         local quad = self.quads[math.ceil(i/4)]
-        self.batch:add(quad, 0, -i/4*1.5, self._transform.r, 1, 1, self._transform.ox, self._transform.oy)
+        self.batch:add(quad, 0, -i/4*1.5, self._transform.r, 1, 1, self.model.sizeX*orx, self.model.sizeY*ory)
     end
 end
 
