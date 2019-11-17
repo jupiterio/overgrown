@@ -11,10 +11,10 @@ function love.load()
     --world:add("south", {file = "kitchen-2-south.vox", y=48, z=8})
     world:add("west", {file = "kitchen-3-west.vox", x=-48, z=8})
     world:add("floor", {file = "kitchen-4-floor.vox"})
-    world:zorder()
 end
 
 function love.update(dt)
+    world:rotate(world.rot + dt/2)
 end
 
 function love.draw()
