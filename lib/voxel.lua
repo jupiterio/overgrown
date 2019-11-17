@@ -47,7 +47,7 @@ function voxel:transform(r, sx, sy, ox, oy)
 
     for i=1,#self.quads*4 do
         local quad = self.quads[math.ceil(i/4)]
-        self.batch:add(quad, 0, -i/4*1.5, self._transform.r, -1, 1, self._transform.ox, self._transform.oy)
+        self.batch:add(quad, 0, -i/4*1.5, self._transform.r, 1, 1, self._transform.ox, self._transform.oy)
     end
 end
 
