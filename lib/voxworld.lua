@@ -13,8 +13,8 @@ function voxworld.new(mfolder)
     return setmetatable(world, {__index = voxworld})
 end
 
-function voxworld.transformPoint(x, y, z)
-    return x, y-z*4*1.5
+function voxworld:transformPoint(x, y, z)
+    return x, (y-z*1.5)*0.577
 end
 
 function voxworld:add(id, options)
